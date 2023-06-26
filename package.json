@@ -1,0 +1,25 @@
+{
+  "name": "exam_part1",
+  "version": "1.0.0",
+  "description": "0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PobaranchukTetiana/exam_part1.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PobaranchukTetiana/exam_part1/issues"
+  },
+  "homepage": "https://github.com/PobaranchukTetiana/exam_part1#readme",
+  "dependencies": {
+    "cypress": "^12.15.0"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^8.0.2"
+  }
+}
