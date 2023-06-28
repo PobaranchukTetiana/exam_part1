@@ -1,5 +1,5 @@
 import user from '../fixtures/user.json'
-import {faker} from '@faker-js/faker'
+import { faker } from '@faker-js/faker'
 
 user.email = faker.internet.email();
 user.answer = faker.person.firstName();
