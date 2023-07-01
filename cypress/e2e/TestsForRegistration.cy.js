@@ -1,45 +1,33 @@
 import user from '../fixtures/user.json'
-import { faker } from '@faker-js/faker'
+import RegisterPage from '../support/pages/RegisterPage';
+import HomePage from '../support/pages/HomePage';
+import LoginPage from '../support/pages/LoginPage';
 
-user.email = faker.internet.email();
-user.answer = faker.person.firstName();
-user.emailIncorrect = faker.internet.emoji();
-
-it('RegistrationTEST1', () => {
-  cy.log('The user cannot log in without filling in all the fields with the correct data');
-  cy.visit('/');
-  cy.get('.close-dialog').click();
-  cy.get('#navbarAccount').click();
-  cy.get('#navbarLoginButton').click();
-  cy.get('#newCustomerLink .primary-link').click();
-  cy.get('#emailControl').type(user.emailIncorrect);
-  cy.get('#passwordControl').type(user.passwordIncorrect);
-  cy.get('#repeatPasswordControl').type(user.passwordRepeadIncorrect);
-  cy.get('[name="securityQuestion"]').click();
-  cy.get('[id="mat-option-4"]').click();
-  cy.get('#securityAnswerControl').type(user.answer);
-  cy.get('#registerButton.mat-focus-indicator').should('have.attr', 'disabled');
+it('The user cannot log in without filling in all the fields with the correct data  TEST1', () => {
+  cy.log('Registration');
+  HomePage.GetLoginPage();
+  LoginPage.getNewCustomer().click();
+  RegisterPage.getRegEmail().type(user.emailIncorrect);
+  RegisterPage.getRegPassword().type(user.passwordIncorrect);
+  RegisterPage.getRepeatPassword().type(user.passwordRepeadIncorrect);
+  RegisterPage.getSecurityQuestion().click();
+  RegisterPage.getQuestionName().click();
+  RegisterPage.getAnswer().type(user.answer);
+  cy.get('#registerButton.mat-focus-indicator')
+    .should('have.attr', 'disabled');
 })
 
-it('RegistrationTEST2', () => {
-  cy.log('The user can log in by filling in all the fields with the correct data');
-  cy.visit('/');
-  cy.get('.close-dialog').click();
-  cy.get('#navbarAccount').click();
-  cy.get('#navbarLoginButton').click();
-  cy.get('#newCustomerLink .primary-link').click();
-  cy.get('#emailControl').type(user.email);
-  cy.get('#passwordControl').type(user.password);
-  cy.get('#repeatPasswordControl').type(user.passwordRepead);
-  cy.get('[name="securityQuestion"]').click();
-  cy.get('[id="mat-option-4"]').click();
-  cy.get('#securityAnswerControl').type(user.answer);
-  cy.get('#registerButton.mat-focus-indicator').click();
+it('The user can log in by filling in all the fields with the correct data  TEST2', () => {
+  cy.log('Registration');
+  HomePage.GetLoginPage();
+  LoginPage.getNewCustomer().click();
+  RegisterPage.registerUser();
+  cy.get('.mat-simple-snack-bar-content')
+    .should('have.text', 'Registration completed successfully. You can now log in.');
 
   cy.log('Authorize user');
-  cy.get('#email').type(user.email);
-  cy.get('#password').type(user.password);
-  cy.get('button[type="submit"]').contains('Log in').click();
-  cy.get('[routerlink="/basket"]').click()
-  cy.get('app-purchase-basket').contains(user.email).should('exist');
+  LoginPage.LoginUser();
+  cy.get('[aria-label="Show the shopping cart"]')
+    .should('be.visible')
 })
+

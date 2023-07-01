@@ -1,11 +1,13 @@
 ///<reference types="cypress"/>
 
-import { login } from "../support/helper";
-import { findProduct } from "../support/helper";
+import { RegistrateUser, LoginUser, findProduct, BuyProduct } from "../support/helper";
 
-it("Order", () => {
-
-  login();
+it("Order with helper", () => {
+  cy.log('helper');
+  RegistrateUser();
+  LoginUser();
   findProduct();
+  BuyProduct();
+  cy.get('.confirmation').should('have.text', 'Thank you for your purchase!');
 
 });
